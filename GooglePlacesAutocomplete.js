@@ -46,7 +46,20 @@ const defaultStyles = {
     height: 1,
     backgroundColor: '#c8c7cc',
   },
+  descriptionContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
   description: {
+      flex: 1,
+      justifyContent: 'flex-start',
+      overflow: 'hidden'
+  },
+  secondaryDescription: {
+      flexDirection: 'row',
+      justifyContent: 'flex-end'
+  },
+  secondaryDescriptionText: {
   },
   descriptionUnderlay: '#c8c7cc',
   loader: {
@@ -490,6 +503,10 @@ const GooglePlacesAutocomplete = React.createClass({
   _renderRow(rowData = {}) {
     rowData.description = rowData.description || rowData.formatted_address || rowData.name;
 
+    rowData.name = rowData.description.split(',')[0]
+    rowData.secondary = rowData.description.split(',')[1]
+    rowData.tertiary = rowData.description.split(',')[2]
+
     return (
       <TouchableHighlight
         onPress={() =>
@@ -499,12 +516,21 @@ const GooglePlacesAutocomplete = React.createClass({
       >
         <View>
           <View style={[defaultStyles.row, this.props.styles.row, rowData.isPredefinedPlace ? this.props.styles.specialItemRow : {}]}>
-            <Text
-              style={[{flex: 1}, defaultStyles.description, this.props.styles.description, rowData.isPredefinedPlace ? this.props.styles.predefinedPlacesDescription : {}]}
+            <View
+              style={[{flex: 1}, defaultStyles.descriptionContainer, rowData.isPredefinedPlace ? this.props.styles.predefinedPlacesDescription : {}]}
               numberOfLines={1}
             >
-              {rowData.description}
-            </Text>
+              <Text style={[defaultStyles.description, this.props.styles.description]}>{rowData.name}</Text>
+              <View style={[defaultStyles.secondaryDescription, this.props.styles.secondaryDescription]}>
+                  <Text style={[defaultStyles.secondaryDescriptionText, this.props.styles.secondaryDescriptionText, this.props.styles.secondaryText]}>{rowData.secondary}</Text>
+                  {(() => {
+                      if(rowData.tertiary)
+                          return (
+                              <Text style={[defaultStyles.secondaryDescriptionText, this.props.styles.secondaryDescriptionText, this.props.styles.tertiaryText]}>{',' + rowData.tertiary}</Text>
+                          )
+                  })()}
+             </View>
+            </View>
             {this._renderLoader(rowData)}
           </View>
           <View style={[defaultStyles.separator, this.props.styles.separator]} />
