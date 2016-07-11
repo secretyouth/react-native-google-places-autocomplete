@@ -48,6 +48,7 @@ const defaultStyles = {
   },
   description: {
   },
+  descriptionUnderlay: '#c8c7cc'
   loader: {
     // flex: 1,
     flexDirection: 'row',
@@ -133,7 +134,7 @@ const GooglePlacesAutocomplete = React.createClass({
       listViewDisplayed: false,
     };
   },
-  
+
   setAddressText(address) {
     this.setState({ text: address })
   },
@@ -494,7 +495,7 @@ const GooglePlacesAutocomplete = React.createClass({
         onPress={() =>
           this._onPress(rowData)
         }
-        underlayColor="#c8c7cc"
+        underlayColor={this.props.styles.descriptionUnderlay || defaultStyles.descriptionUnderlay}
       >
         <View>
           <View style={[defaultStyles.row, this.props.styles.row, rowData.isPredefinedPlace ? this.props.styles.specialItemRow : {}]}>
