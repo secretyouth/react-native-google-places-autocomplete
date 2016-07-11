@@ -48,7 +48,7 @@ const defaultStyles = {
   },
   description: {
   },
-  descriptionUnderlay: '#c8c7cc'
+  descriptionUnderlay: '#c8c7cc',
   loader: {
     // flex: 1,
     flexDirection: 'row',
