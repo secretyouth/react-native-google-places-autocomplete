@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { TextInput, View, ListView, Image, Text, Dimensions, TouchableHighlight, TouchableWithoutFeedback, Platform, ActivityIndicatorIOS, ProgressBarAndroid, PixelRatio } from 'react-native';
+import { TextInput, View, ListView, Image, Text, Dimensions, TouchableHighlight, TouchableWithoutFeedback, Platform, ActivityIndicator, ProgressBarAndroid, PixelRatio } from 'react-native';
 import Qs from 'qs';
 
 const defaultStyles = {
@@ -65,8 +65,8 @@ const defaultStyles = {
   loader: {
     // flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-end',
     height: 20,
+    marginRight: 5
   },
   androidLoader: {
     marginRight: -15,
@@ -480,7 +480,7 @@ const GooglePlacesAutocomplete = React.createClass({
       );
     }
     return (
-      <ActivityIndicatorIOS
+      <ActivityIndicator
         animating={true}
         size="small"
       />
@@ -521,6 +521,8 @@ const GooglePlacesAutocomplete = React.createClass({
               numberOfLines={1}
             >
               <Text style={[defaultStyles.description, this.props.styles.description]}>{rowData.name}</Text>
+              {this._renderLoader(rowData)}
+
               <View style={[defaultStyles.secondaryDescription, this.props.styles.secondaryDescription]}>
                   <Text style={[defaultStyles.secondaryDescriptionText, this.props.styles.secondaryDescriptionText, this.props.styles.secondaryText]}>{rowData.secondary}</Text>
                   {(() => {
@@ -531,7 +533,6 @@ const GooglePlacesAutocomplete = React.createClass({
                   })()}
              </View>
             </View>
-            {this._renderLoader(rowData)}
           </View>
           <View style={[defaultStyles.separator, this.props.styles.separator]} />
         </View>
